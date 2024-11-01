@@ -29,14 +29,15 @@ namespace TrilhaApiDesafio.Controllers
         [HttpGet("ObterTodos")]
         public IActionResult ObterTodos()
         {
-            var tarefa = _context.Tarefas.Where(x => x.Titulo.Contains(titulo));
-            return Ok(tarefa);
+            var tarefas = _context.Tarefas.ToList();
+            
+            return Ok(tarefas);
         }
 
         [HttpGet("ObterPorTitulo")]
         public IActionResult ObterPorTitulo(string titulo)
         {
-            var tarefa = _context.Tarefas.Where(x => x.Status == status);
+            var tarefa = _context.Tarefas.Where(x => x.Titulo == titulo);
             return Ok(tarefa);
         }
 
@@ -50,7 +51,6 @@ namespace TrilhaApiDesafio.Controllers
         [HttpGet("ObterPorStatus")]
         public IActionResult ObterPorStatus(EnumStatusTarefa status)
         {
-           
             var tarefa = _context.Tarefas.Where(x => x.Status == status);
             return Ok(tarefa);
         }
@@ -96,7 +96,7 @@ namespace TrilhaApiDesafio.Controllers
 
             if (tarefaBanco == null)
                 return NotFound();
- _context.Tarefas.Remove(tarefaBanco);
+            _context.Tarefas.Remove(tarefaBanco);
             _context.SaveChanges();
             return NoContent();
         }
